@@ -1,5 +1,8 @@
 package com.zipcodewilmington;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 /**
  * Created by leon on 1/29/18.
  */
@@ -25,7 +28,7 @@ public class StringArrayUtils {
      * @return last element in specified array
      */ // TODO
     public static String getLastElement(String[] array) {
-        return null;
+        return array[array.length - 1];
     }
 
     /**
@@ -33,7 +36,7 @@ public class StringArrayUtils {
      * @return second to last element in specified array
      */ // TODO
     public static String getSecondToLastElement(String[] array) {
-        return null;
+        return array[array.length - 2];
     }
 
     /**
@@ -42,6 +45,10 @@ public class StringArrayUtils {
      * @return true if the array contains the specified `value`
      */ // TODO
     public static boolean contains(String[] array, String value) {
+        for (String s : array) {
+            if (s.equals(value))
+                return true;
+        }
         return false;
     }
 
@@ -50,7 +57,13 @@ public class StringArrayUtils {
      * @return an array with identical contents in reverse order
      */ // TODO
     public static String[] reverse(String[] array) {
-        return null;
+        String[] reverseArray = new String[array.length];
+        int reverseCounter = 0;
+        for (int i = array.length - 1; i >= 0; i--) {
+            reverseArray[reverseCounter] = array[i];
+            reverseCounter++;
+        }
+        return reverseArray;
     }
 
     /**
@@ -58,6 +71,12 @@ public class StringArrayUtils {
      * @return true if the order of the array is the same backwards and forwards
      */ // TODO
     public static boolean isPalindromic(String[] array) {
+        for (int i = 0; i <= array.length / 2 && array.length != 0; i++) {
+            if (array[i] != array[array.length - i - 1]) {
+                break;
+            }
+            return true;
+        }
         return false;
     }
 
@@ -75,7 +94,13 @@ public class StringArrayUtils {
      * @return number of occurrences the specified `value` has occurred
      */ // TODO
     public static int getNumberOfOccurrences(String[] array, String value) {
-        return 0;
+        int count = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == value) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
@@ -84,7 +109,20 @@ public class StringArrayUtils {
      * @return array with identical contents excluding values of `value`
      */ // TODO
     public static String[] removeValue(String[] array, String valueToRemove) {
-        return null;
+        if (array == null) {
+            return null;
+        } else if (array.length <= 0) {
+            return array;
+        } else {
+            String[] output = new String[array.length - 1];
+            int count = 0;
+            for (String i : array) {
+                if (!i.equals(valueToRemove)) {
+                    output[count++] = i;
+                }
+            }
+            return output;
+        }
     }
 
     /**
@@ -92,16 +130,38 @@ public class StringArrayUtils {
      * @return array of Strings with consecutive duplicates removes
      */ // TODO
     public static String[] removeConsecutiveDuplicates(String[] array) {
-        return null;
+
+        ArrayList<String> aList = new ArrayList();
+        for (int i = 0; i < array.length - 1; i++) {
+            if (!array[i].equals(array[i + 1])) {
+                aList.add(array[i]);
+            }
+        }
+        aList.add(array[array.length - 1]);
+        return aList.toArray(new String[0]);
     }
+
 
     /**
      * @param array array of chars
      * @return array of Strings with each consecutive duplicate occurrence concatenated as a single string in an array of Strings
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
-        return null;
+
+        ArrayList<String> aList = new ArrayList();
+        int count = 0;
+        String temp = array[0];
+        aList.add(temp);
+        for (int i = 1; i < array.length; i++) {
+            if (!array[i].equals(temp)) {
+                temp = array[i];
+                aList.add(array[i]);
+                count++;
+            } else {
+                aList.set(count, aList.get(count) + temp);
+            }
+        }
+        //aList.add(array[array.length - 1]);
+        return aList.toArray(new String[0]);
     }
-
-
 }
